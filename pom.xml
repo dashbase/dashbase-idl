@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <groupId>io.dashbase</groupId>
+  <artifactId>dashbase-idl</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Dashbase IDLs</name>
+
+  <build>
+    <plugins>
+	  <plugin>
+		  <groupId>org.apache.avro</groupId>
+		  <artifactId>avro-maven-plugin</artifactId>
+		  <version>1.8.2</version>
+		  <executions>
+		    <execution>
+		      <phase>generate-sources</phase>
+		      <goals>
+		        <goal>schema</goal>
+		      </goals>
+		      <configuration>
+				<stringType>String</stringType>
+		        <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+		        <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+		      </configuration>
+		    </execution>
+		  </executions>
+	  </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+	<extensions>
+		<!-- Enabling the use of FTP -->
+		<extension>
+			<groupId>org.kuali.maven.wagons</groupId>
+			<artifactId>maven-s3-wagon</artifactId>
+			<version>1.2.1</version>
+		</extension>
+	</extensions>
+  </build>
+  <dependencies>
+	<!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
+	<dependency>
+	    <groupId>org.apache.avro</groupId>
+	    <artifactId>avro</artifactId>
+	    <version>1.8.2</version>
+	</dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+	  <version>1.7.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+	  <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+
+  <repositories>
+	<repository>
+		<id>twitter</id>
+		<url>http://maven.twttr.com</url>
+	</repository>
+	<repository>
+		<id>repo.dashbase.io</id>
+		<url>https://maven.dashbase.io/release</url>
+		<snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+	<repository>
+		<id>sonatype-snapshots</id>
+		<name>Sonatype Snapshots</name>
+		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		<snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+  </repositories>
+
+  <distributionManagement>
+	<snapshotRepository>
+		<id>repo.dashbase.io</id>
+		<url>s3://repo.dashbase.io/snapshot</url>
+	</snapshotRepository>
+	<repository>
+		<id>repo.dashbase.io</id>
+		<url>s3://repo.dashbase.io/snapshot</url>
+	</repository>
+  </distributionManagement>
+</project>
