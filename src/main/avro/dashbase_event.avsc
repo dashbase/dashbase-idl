@@ -1,0 +1,14 @@
+{"namespace": "io.dashbase.avro",
+   "type": "record",
+   "name": "DashbaseEvent",
+   "fields": [
+       {"name": "timeInMillis", "type": "long"},
+       {"name": "metaColumns", "type": {"type": "map", "values":"string"}},
+       {"name": "numberColumns", "type": {"type": "map", "values":"double"}},
+       {"name": "textColumns", "type": {"type": "map", "values":"string"}},
+       {"name": "idColumns", "type": {"type": "map", "values":"string"}},
+       {"name": "omitPayload", "type":"boolean"},
+       {"name": "usePayload", "type":"boolean"},
+       {"name": "payload", "type":"bytes"}
+   ]
+}
