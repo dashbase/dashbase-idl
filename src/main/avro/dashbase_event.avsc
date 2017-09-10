@@ -7,8 +7,6 @@
        {"name": "numberColumns", "type": {"type": "map", "values":"double"}},
        {"name": "textColumns", "type": {"type": "map", "values":"string"}},
        {"name": "idColumns", "type": {"type": "map", "values":"string"}},
-       {"name": "omitPayload", "type":"boolean"},
-       {"name": "usePayload", "type":"boolean"},
-       {"name": "payload", "type":"bytes"}
+       {"name": "omitPayload", "type":"boolean"}
    ]
 }

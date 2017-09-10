@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -489599681444126845L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DashbaseEvent\",\"namespace\":\"io.dashbase.avro\",\"fields\":[{\"name\":\"timeInMillis\",\"type\":\"long\"},{\"name\":\"metaColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"numberColumns\",\"type\":{\"type\":\"map\",\"values\":\"double\",\"avro.java.string\":\"String\"}},{\"name\":\"textColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"idColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"omitPayload\",\"type\":\"boolean\"},{\"name\":\"usePayload\",\"type\":\"boolean\"},{\"name\":\"payload\",\"type\":\"bytes\"}]}");
+  private static final long serialVersionUID = -6533900003777909918L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DashbaseEvent\",\"namespace\":\"io.dashbase.avro\",\"fields\":[{\"name\":\"timeInMillis\",\"type\":\"long\"},{\"name\":\"metaColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"numberColumns\",\"type\":{\"type\":\"map\",\"values\":\"double\",\"avro.java.string\":\"String\"}},{\"name\":\"textColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"idColumns\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"omitPayload\",\"type\":\"boolean\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -57,8 +57,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
   @Deprecated public java.util.Map<java.lang.String,java.lang.String> textColumns;
   @Deprecated public java.util.Map<java.lang.String,java.lang.String> idColumns;
   @Deprecated public boolean omitPayload;
-  @Deprecated public boolean usePayload;
-  @Deprecated public java.nio.ByteBuffer payload;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -75,18 +73,14 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
    * @param textColumns The new value for textColumns
    * @param idColumns The new value for idColumns
    * @param omitPayload The new value for omitPayload
-   * @param usePayload The new value for usePayload
-   * @param payload The new value for payload
    */
-  public DashbaseEvent(java.lang.Long timeInMillis, java.util.Map<java.lang.String,java.lang.String> metaColumns, java.util.Map<java.lang.String,java.lang.Double> numberColumns, java.util.Map<java.lang.String,java.lang.String> textColumns, java.util.Map<java.lang.String,java.lang.String> idColumns, java.lang.Boolean omitPayload, java.lang.Boolean usePayload, java.nio.ByteBuffer payload) {
+  public DashbaseEvent(java.lang.Long timeInMillis, java.util.Map<java.lang.String,java.lang.String> metaColumns, java.util.Map<java.lang.String,java.lang.Double> numberColumns, java.util.Map<java.lang.String,java.lang.String> textColumns, java.util.Map<java.lang.String,java.lang.String> idColumns, java.lang.Boolean omitPayload) {
     this.timeInMillis = timeInMillis;
     this.metaColumns = metaColumns;
     this.numberColumns = numberColumns;
     this.textColumns = textColumns;
     this.idColumns = idColumns;
     this.omitPayload = omitPayload;
-    this.usePayload = usePayload;
-    this.payload = payload;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
@@ -99,8 +93,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
     case 3: return textColumns;
     case 4: return idColumns;
     case 5: return omitPayload;
-    case 6: return usePayload;
-    case 7: return payload;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -115,8 +107,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
     case 3: textColumns = (java.util.Map<java.lang.String,java.lang.String>)value$; break;
     case 4: idColumns = (java.util.Map<java.lang.String,java.lang.String>)value$; break;
     case 5: omitPayload = (java.lang.Boolean)value$; break;
-    case 6: usePayload = (java.lang.Boolean)value$; break;
-    case 7: payload = (java.nio.ByteBuffer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -218,38 +208,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   /**
-   * Gets the value of the 'usePayload' field.
-   * @return The value of the 'usePayload' field.
-   */
-  public java.lang.Boolean getUsePayload() {
-    return usePayload;
-  }
-
-  /**
-   * Sets the value of the 'usePayload' field.
-   * @param value the value to set.
-   */
-  public void setUsePayload(java.lang.Boolean value) {
-    this.usePayload = value;
-  }
-
-  /**
-   * Gets the value of the 'payload' field.
-   * @return The value of the 'payload' field.
-   */
-  public java.nio.ByteBuffer getPayload() {
-    return payload;
-  }
-
-  /**
-   * Sets the value of the 'payload' field.
-   * @param value the value to set.
-   */
-  public void setPayload(java.nio.ByteBuffer value) {
-    this.payload = value;
-  }
-
-  /**
    * Creates a new DashbaseEvent RecordBuilder.
    * @return A new DashbaseEvent RecordBuilder
    */
@@ -287,8 +245,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
     private java.util.Map<java.lang.String,java.lang.String> textColumns;
     private java.util.Map<java.lang.String,java.lang.String> idColumns;
     private boolean omitPayload;
-    private boolean usePayload;
-    private java.nio.ByteBuffer payload;
 
     /** Creates a new Builder */
     private Builder() {
@@ -325,14 +281,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
         this.omitPayload = data().deepCopy(fields()[5].schema(), other.omitPayload);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.usePayload)) {
-        this.usePayload = data().deepCopy(fields()[6].schema(), other.usePayload);
-        fieldSetFlags()[6] = true;
-      }
-      if (isValidValue(fields()[7], other.payload)) {
-        this.payload = data().deepCopy(fields()[7].schema(), other.payload);
-        fieldSetFlags()[7] = true;
-      }
     }
 
     /**
@@ -364,14 +312,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
       if (isValidValue(fields()[5], other.omitPayload)) {
         this.omitPayload = data().deepCopy(fields()[5].schema(), other.omitPayload);
         fieldSetFlags()[5] = true;
-      }
-      if (isValidValue(fields()[6], other.usePayload)) {
-        this.usePayload = data().deepCopy(fields()[6].schema(), other.usePayload);
-        fieldSetFlags()[6] = true;
-      }
-      if (isValidValue(fields()[7], other.payload)) {
-        this.payload = data().deepCopy(fields()[7].schema(), other.payload);
-        fieldSetFlags()[7] = true;
       }
     }
 
@@ -607,83 +547,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
       return this;
     }
 
-    /**
-      * Gets the value of the 'usePayload' field.
-      * @return The value.
-      */
-    public java.lang.Boolean getUsePayload() {
-      return usePayload;
-    }
-
-    /**
-      * Sets the value of the 'usePayload' field.
-      * @param value The value of 'usePayload'.
-      * @return This builder.
-      */
-    public io.dashbase.avro.DashbaseEvent.Builder setUsePayload(boolean value) {
-      validate(fields()[6], value);
-      this.usePayload = value;
-      fieldSetFlags()[6] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'usePayload' field has been set.
-      * @return True if the 'usePayload' field has been set, false otherwise.
-      */
-    public boolean hasUsePayload() {
-      return fieldSetFlags()[6];
-    }
-
-
-    /**
-      * Clears the value of the 'usePayload' field.
-      * @return This builder.
-      */
-    public io.dashbase.avro.DashbaseEvent.Builder clearUsePayload() {
-      fieldSetFlags()[6] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'payload' field.
-      * @return The value.
-      */
-    public java.nio.ByteBuffer getPayload() {
-      return payload;
-    }
-
-    /**
-      * Sets the value of the 'payload' field.
-      * @param value The value of 'payload'.
-      * @return This builder.
-      */
-    public io.dashbase.avro.DashbaseEvent.Builder setPayload(java.nio.ByteBuffer value) {
-      validate(fields()[7], value);
-      this.payload = value;
-      fieldSetFlags()[7] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'payload' field has been set.
-      * @return True if the 'payload' field has been set, false otherwise.
-      */
-    public boolean hasPayload() {
-      return fieldSetFlags()[7];
-    }
-
-
-    /**
-      * Clears the value of the 'payload' field.
-      * @return This builder.
-      */
-    public io.dashbase.avro.DashbaseEvent.Builder clearPayload() {
-      payload = null;
-      fieldSetFlags()[7] = false;
-      return this;
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public DashbaseEvent build() {
@@ -695,8 +558,6 @@ public class DashbaseEvent extends org.apache.avro.specific.SpecificRecordBase i
         record.textColumns = fieldSetFlags()[3] ? this.textColumns : (java.util.Map<java.lang.String,java.lang.String>) defaultValue(fields()[3]);
         record.idColumns = fieldSetFlags()[4] ? this.idColumns : (java.util.Map<java.lang.String,java.lang.String>) defaultValue(fields()[4]);
         record.omitPayload = fieldSetFlags()[5] ? this.omitPayload : (java.lang.Boolean) defaultValue(fields()[5]);
-        record.usePayload = fieldSetFlags()[6] ? this.usePayload : (java.lang.Boolean) defaultValue(fields()[6]);
-        record.payload = fieldSetFlags()[7] ? this.payload : (java.nio.ByteBuffer) defaultValue(fields()[7]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

@@ -12,7 +12,6 @@ public class DashbaseEventBuilderTest {
     public void testSerialziation() throws Exception {
         DashbaseEventBuilder eventBuilder =
                 new DashbaseEventBuilder()
-                .withPayload(new byte[0])
                 .withTimeInMillis(1234567L)
                 .addMeta("tags", "green")
                 .addNumber("num", 1234.0)
