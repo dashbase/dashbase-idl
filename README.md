@@ -29,8 +29,6 @@ Dashbase columns define how the record is to be stored.
 Raw data and its storage can be configurated via:
 
 * omitPayload - if true, raw data storage is skipped. Examples would be metrics or click data, where raw event bytes are typically not used, and storing them would be wasteful.
-* usePayload - if true, will be using the payload data provided, otherwise the avro bytes are used for raw storage. This flag is ignored if ```omitPayload``` is set to true.
-* payload- the raw bytes for the payload, used only if ```omitPayload``` is false AND ```usePayload``` is true.
 
 ## Java API
 
@@ -41,8 +39,6 @@ Example:
 ```
 DashbaseEventBuilder eventBuilder =
                 new DashbaseEventBuilder()
-                .withPayload(new byte[]{0x1, 0x2, 0x13})
-                .withUsePayload(true)
                 .withOmitPayload(false)
                 .withTimeInMillis(System.currentTimeMillis())
                 .addMeta("tags", "green")
