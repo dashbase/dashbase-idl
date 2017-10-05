@@ -1,8 +1,9 @@
 package io.dashbase.avro;
 
+import junit.framework.Assert;
 import org.junit.Test;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertFalse;
 
 public class DashbaseEventSerializerTest {
 
@@ -21,5 +22,14 @@ public class DashbaseEventSerializerTest {
 
         DashbaseEvent event2 = DashbaseEventSerializer.fromJson(jsonString);
         Assert.assertEquals(jsonString, event2.toString());
+    }
+
+    @Test
+    public void testNaN() throws Exception {
+	    DashbaseEvent event = new DashbaseEventBuilder().withTimeInMillis(123).addNumber("test", Double.NaN).build();
+      assertFalse(event.getNumberColumns().containsKey("test"));
+
+      event = new DashbaseEventBuilder().withTimeInMillis(123).addNumber("test", Double.NaN).build();
+      assertFalse(event.getNumberColumns().containsKey("test"));
     }
 }
