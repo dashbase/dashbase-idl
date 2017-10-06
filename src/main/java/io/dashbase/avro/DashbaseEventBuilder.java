@@ -93,7 +93,7 @@ public class DashbaseEventBuilder {
         return event;
     }
 
-    private boolean isValidDouble(double d) {
+    private static boolean isValidDouble(double d) {
         // NaN, Infinite and Finite doubles are serialized as String "NaN" "Infinite" and "Finite",
         // which causes AvroTypeException
         // https://issues.apache.org/jira/browse/AVRO-2032
