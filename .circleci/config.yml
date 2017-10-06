@@ -18,7 +18,7 @@ jobs:
           paths:
             - ~/.m2
 
-      - run: mvn test
+      - run: mvn package
 
       - store_test_results:
           path: target/surefire-reports
