@@ -7,15 +7,13 @@ import org.apache.avro.io.DecoderFactory;
 import org.apache.avro.specific.SpecificDatumReader;
 
 public class DashbaseEventSerializer {
-	private static final DecoderFactory DECODER_FACTORY =  new DecoderFactory();
+  public static DashbaseEvent fromJson(String json) throws IOException {
+    DashbaseEvent event = new DashbaseEvent();
 
-	public static DashbaseEvent fromJson(String json) throws IOException {
-		DashbaseEvent event = new DashbaseEvent();
+    Decoder decoder = DecoderFactory.get().jsonDecoder(event.getSchema(), json);
 
-        Decoder decoder = DECODER_FACTORY.jsonDecoder(event.getSchema(), json);
+    SpecificDatumReader<DashbaseEvent> reader = new SpecificDatumReader<DashbaseEvent>(DashbaseEvent.class);
 
-        SpecificDatumReader<DashbaseEvent> reader = new SpecificDatumReader<DashbaseEvent>(DashbaseEvent.class);
-
-        return reader.read(event, decoder);
-	}
+    return reader.read(event, decoder);
+  }
 }
