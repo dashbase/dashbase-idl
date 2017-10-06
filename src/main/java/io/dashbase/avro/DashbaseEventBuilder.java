@@ -15,7 +15,7 @@ public class DashbaseEventBuilder {
     private boolean omitPayload = false;
 
     public DashbaseEventBuilder withTimeInMillis(long timeInMillis) {
-        Preconditions.checkArgument(timeInMillis >= 0);
+        Preconditions.checkArgument(timeInMillis >= 0L);
         this.timeInMillis = timeInMillis;
         return this;
     }
@@ -66,18 +66,15 @@ public class DashbaseEventBuilder {
 
     public DashbaseEventBuilder withNumberColumns(Map<String, Double> numberCols) {
         Preconditions.checkNotNull(numberCols);
-        // NaN is serialize as "NaN" in JSON, so we don't want to allow NaN value.
-        numberCols.entrySet().stream()
-            .filter(e -> !Double.isNaN(e.getValue()))
+        this.numberCols = numberCols.entrySet().stream()
+            .filter(e -> isValidDouble(e.getValue()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        this.numberCols = numberCols;
         return this;
     }
 
     public DashbaseEventBuilder addNumber(String name, double val) {
         Preconditions.checkNotNull(name);
-        if (Double.isNaN(val)) {
-            // NaN is serialize as "NaN" in JSON, so we don't want to allow NaN value.
+        if (!isValidDouble(val)) {
             return this;
         }
         this.numberCols.put(name, val);
@@ -94,5 +91,13 @@ public class DashbaseEventBuilder {
         event.setTextColumns(textCols);
         event.setNumberColumns(numberCols);
         return event;
+    }
+
+    private boolean isValidDouble(double d) {
+        // NaN, Infinite and Finite doubles are serialized as String "NaN" "Infinite" and "Finite",
+        // which causes AvroTypeException
+        // https://issues.apache.org/jira/browse/AVRO-2032
+        // Ignore those values for now.
+        return !Double.isNaN(d) && !Double.isInfinite(d) && !Double.isFinite(d);
     }
 }

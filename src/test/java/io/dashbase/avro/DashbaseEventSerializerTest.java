@@ -1,5 +1,6 @@
 package io.dashbase.avro;
 
+import com.google.common.collect.ImmutableMap;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class DashbaseEventSerializerTest {
 	    DashbaseEvent event = new DashbaseEventBuilder().withTimeInMillis(123).addNumber("test", Double.NaN).build();
       assertFalse(event.getNumberColumns().containsKey("test"));
 
-      event = new DashbaseEventBuilder().withTimeInMillis(123).addNumber("test", Double.NaN).build();
+      event = new DashbaseEventBuilder().withTimeInMillis(123).withNumberColumns(ImmutableMap.of("test", Double.NaN)).build();
       assertFalse(event.getNumberColumns().containsKey("test"));
     }
 }
