@@ -6,19 +6,33 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Setup AWS credentials
+          command: |
+            mkdir ~/.aws
+            echo -e "[default]\naws_access_key_id=${AWS_ACCESS_KEY_ID}\naws_secret_access_key=${AWS_SECRET_ACCESS_KEY}\n" > ~/.aws/credentials
+            chmod 600 ~/.aws/*
+
       - restore_cache:
           keys:
-            - m2-{{ checksum "pom.xml" }}
-            - m2- # used if checksum fails
+            - gradle-{{ checksum "build.gradle" }}
+            - gradle- # used if checksum fails
 
-      - run: mvn dependency:go-offline
+      - run: ./gradlew testClasses
 
       - save_cache:
-          key: m2-{{ checksum "pom.xml" }}
+          key: gradle-{{ checksum "build.gradle" }}
           paths:
-            - ~/.m2
+            - ~/.gradle
 
-      - run: mvn package
+      - run: ./gradlew build
 
       - store_test_results:
-          path: target/surefire-reports
+          path: build/test-results
+
+      - deploy:
+          name: Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./gradlew publish
+            fi
