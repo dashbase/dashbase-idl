@@ -1,0 +1,24 @@
+// Example IDL file for our monster's schema.
+
+namespace io.dashbase.flatbuffers;
+
+struct StringCol {
+  key:string;
+  value:string;
+}
+
+struct NumCol {
+  key:string;
+  value:double;
+}
+
+table DashbaseEvent {
+  timeInMillis:long = -1;
+  omitPayload:bool = false;
+  textCols:[StringCol];
+  metaCols:[StringCol];
+  idCols:[StringCol];
+  numberCols:[NumCol];
+}
+
+root_type DashbaseEvent;
