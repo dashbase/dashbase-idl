@@ -15,13 +15,13 @@ jobs:
 
       - restore_cache:
           keys:
-            - gradle-{{ checksum "build.gradle" }}
-            - gradle- # used if checksum fails
+            - gradle-idl-{{ checksum "build.gradle" }}
+            - gradle-idl- # used if checksum fails
 
       - run: ./gradlew testClasses
 
       - save_cache:
-          key: gradle-{{ checksum "build.gradle" }}
+          key: gradle-idl-{{ checksum "build.gradle" }}
           paths:
             - ~/.gradle
 
