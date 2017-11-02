@@ -6,6 +6,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class DashbaseEventBuilderTest {
 
     @Test
@@ -23,22 +26,41 @@ public class DashbaseEventBuilderTest {
         byte[] bytes = byteBuffer.array();
 
         Assert.assertNotNull(bytes);
-        Assert.assertTrue(bytes.length > 0);
+        assertTrue(bytes.length > 0);
 
         DashbaseEvent newEvent = DashbaseEvent.fromByteBuffer(ByteBuffer.wrap(bytes));
-        Assert.assertEquals(1234567L, newEvent.getTimeInMillis().longValue());
+        assertEquals(1234567L, newEvent.getTimeInMillis().longValue());
 
         Map<String, String> metaColumns = newEvent.getMetaColumns();
-        Assert.assertEquals(1,  metaColumns.size());
-        Assert.assertEquals("green", metaColumns.get("tags"));
+        assertEquals(1,  metaColumns.size());
+        assertEquals("green", metaColumns.get("tags"));
 
         Map<String, Double> numberColumns = newEvent.getNumberColumns();
-        Assert.assertEquals(1,  numberColumns.size());
-        Assert.assertEquals(1234.0, numberColumns.get("num").doubleValue(), 0.0);
+        assertEquals(1,  numberColumns.size());
+        assertEquals(1234.0, numberColumns.get("num").doubleValue(), 0.0);
 
         Map<String, String> textColumns = newEvent.getTextColumns();
-        Assert.assertEquals(1,  textColumns.size());
-        Assert.assertEquals("dashbase is cool", textColumns.get("text"));
+        assertEquals(1,  textColumns.size());
+        assertEquals("dashbase is cool", textColumns.get("text"));
+    }
 
+    @Test
+    public void testNull() {
+        DashbaseEventBuilder builder = DashbaseEventBuilder.builder();
+
+        DashbaseEvent event = builder.withTimeInMillis(100L)
+            .addMeta(null, "val")
+            .addMeta("meta", null)
+            .addMeta(null, null)
+            .addText(null, "val")
+            .addText("text", null)
+            .addText(null, null)
+            .addNumber(null, 0.0)
+            .build();
+
+        assertEquals(100L, event.getTimeInMillis().longValue());
+        assertTrue(event.getTextColumns().isEmpty());
+        assertTrue(event.getMetaColumns().isEmpty());
+        assertTrue(event.getNumberColumns().isEmpty());
     }
 }
