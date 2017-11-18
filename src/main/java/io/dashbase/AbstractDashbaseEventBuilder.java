@@ -112,7 +112,7 @@ public abstract class AbstractDashbaseEventBuilder<T, B extends AbstractDashbase
     if (name != null && val != null) {
       map.put(name, val);
     } else {
-      LOGGER.warn("name {} and value {} cannot be null", name, val, new IllegalArgumentException());
+      LOGGER.debug("name {} and value {} cannot be null", name, val, new IllegalArgumentException());
     }
   }
 }
