@@ -48,3 +48,16 @@ DashbaseEventBuilder eventBuilder =
 DashbaseEvent event = eventBuilder.build();
 ```
 
+## Generating/Updating Flatbuffer from IDL
+
+### Install flatbuffer gerator
+
+```
+brew install flatbuffers
+```
+
+### Generate java code
+
+```
+flatc --java -o src/main/java src/main/flatbuffers/dashbase_event.fbs
+```

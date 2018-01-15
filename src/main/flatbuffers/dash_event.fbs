@@ -1,0 +1,20 @@
+namespace io.dashbase.flatbuffers;
+
+enum Type : byte { Text = 0, Meta = 1, Id = 2, Int = 3, Float = 4, Double = 5 }
+
+table Column {
+  name: string;
+  type: Type;
+  strValue: string;
+  intValue: int;
+  floatValue: float;
+  doubleValue: double;
+}
+
+table DashEvent {
+  timeInMillis:long = -1;
+  omitPayload:bool = false;
+  columns:[Column];
+}
+
+root_type DashEvent;

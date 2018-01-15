@@ -19,6 +19,22 @@ public abstract class AbstractDashbaseEventBuilder<T, B extends AbstractDashbase
 
   public abstract T build();
 
+  public Map<String, String> getTextCols() {
+    return textCols;
+  }
+
+  public Map<String, String> getMetaCols() {
+    return metaCols;
+  }
+
+  public Map<String, String> getIdCols() {
+    return idCols;
+  }
+
+  public Map<String, Double> getNumberCols() {
+    return numberCols;
+  }
+
   public B withTimeInMillis(long timeInMillis) {
     if (timeInMillis <= 0) {
       LOGGER.debug("timeInMillis must be positive {}", timeInMillis, new IllegalArgumentException());

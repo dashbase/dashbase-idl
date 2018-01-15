@@ -9,12 +9,12 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
-public class DashbaseEventBuilderTest {
+public class DashEventBuilderTest {
 
     static ObjectMapper mapper = new ObjectMapper();
 
     static byte[] buildFromJson(byte[] jsonBytes, DashbaseSchema schema, long timestamp) throws Exception {
-        DashbaseEventBuilder builder = DashbaseEventBuilder.builder();
+        DashEventBuilder builder = DashEventBuilder.builder();
         builder.withTimeInMillis(timestamp);
         builder.withOmitPayload(false);
         Map<String, Object> map = (Map<String, Object>) mapper.readValue(jsonBytes, Map.class);
@@ -37,7 +37,7 @@ public class DashbaseEventBuilderTest {
 
     @Test
     public void build() throws Exception {
-        DashbaseEventBuilder builder = new DashbaseEventBuilder();
+        DashEventBuilder builder = DashEventBuilder.builder();
         builder.addId("a", "1");
         builder.addMeta("b", "2");
         builder.addText("c", "3");
@@ -48,21 +48,47 @@ public class DashbaseEventBuilderTest {
         byte[] bytes = builder.build();
 
         ByteBuffer buf = java.nio.ByteBuffer.wrap(bytes);
-        DashbaseEvent event = DashbaseEvent.getRootAsDashbaseEvent(buf);
+        DashEvent event = DashEvent.getRootAsDashEvent(buf);
 
-        Assert.assertEquals("a", event.idCols(0).key());
-        Assert.assertEquals("1", event.idCols(0).value());
-        Assert.assertEquals("b", event.metaCols(0).key());
-        Assert.assertEquals("2", event.metaCols(0).value());
-        Assert.assertEquals("c", event.textCols(0).key());
-        Assert.assertEquals("3", event.textCols(0).value());
-        Assert.assertEquals("d", event.numberCols(0).key());
-        Assert.assertEquals(4, event.numberCols(0).value(), 0);
-        Assert.assertEquals("e", event.textCols(1).key());
-        Assert.assertEquals("5", event.textCols(1).value());
         Assert.assertEquals(6, event.timeInMillis(), 0);
         Assert.assertEquals(true, event.omitPayload());
 
+        int numCols = event.columnsLength();
+        Assert.assertEquals(5, numCols);
+
+        for (int i = 0; i < numCols; ++i) {
+            Column col = event.columns(i);
+            String name = col.name();
+            byte type = col.type();
+            Object val = null;
+            switch(type) {
+                case Type.Text:
+                    Map<String, String> textCols = builder.getTextCols();
+                    val = textCols.get(name);
+                    break;
+                case Type.Meta:
+                    Map<String, String> metaCols = builder.getMetaCols();
+                    val = metaCols.get(name);
+                    break;
+                case Type.Id:
+                    Map<String, String> idCols = builder.getIdCols();
+                    val = idCols.get(name);
+                    break;
+                case Type.Double:
+                    Map<String, Double> numberCols = builder.getNumberCols();
+                    val = numberCols.get(name);
+                    break;
+                default:
+                    Assert.fail("invalid type: " + type);
+            }
+            Assert.assertNotNull(val);
+
+            if (val instanceof String) {
+                Assert.assertEquals(col.strValue(), String.valueOf(val));
+            } else if (val instanceof Number) {
+                Assert.assertEquals(col.doubleValue(), ((Number)val).doubleValue(), 0.0);
+            }
+        }
     }
 
     @Test
