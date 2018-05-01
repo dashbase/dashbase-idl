@@ -17,7 +17,6 @@ public final class NumCol extends Table {
   public String key() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer keyAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
   public double value() { int o = __offset(6); return o != 0 ? bb.getDouble(o + bb_pos) : 0.0; }
-  public boolean mutateValue(double value) { int o = __offset(6); if (o != 0) { bb.putDouble(o + bb_pos, value); return true; } else { return false; } }
 
   public static int createNumCol(FlatBufferBuilder builder,
       int keyOffset,

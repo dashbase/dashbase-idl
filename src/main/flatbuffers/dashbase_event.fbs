@@ -2,12 +2,12 @@
 
 namespace io.dashbase.flatbuffers;
 
-struct StringCol {
+table StringCol {
   key:string;
   value:string;
 }
 
-struct NumCol {
+table NumCol {
   key:string;
   value:double;
 }
@@ -19,6 +19,7 @@ table DashbaseEvent {
   metaCols:[StringCol];
   idCols:[StringCol];
   numberCols:[NumCol];
+  raw:string;
 }
 
 root_type DashbaseEvent;

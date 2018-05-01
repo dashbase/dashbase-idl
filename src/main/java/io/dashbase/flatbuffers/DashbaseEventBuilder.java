@@ -35,6 +35,10 @@ public class DashbaseEventBuilder extends AbstractDashbaseEventBuilder<byte[], D
         DashbaseEvent.addIdCols(builder, idColsOffsets);
         DashbaseEvent.addNumberCols(builder, numColsOffsets);
 
+        if (raw != null) {
+            DashbaseEvent.addRaw(builder, builder.createString(raw));
+        }
+
         int event = DashbaseEvent.endDashbaseEvent(builder);
         builder.finish(event);
         return builder.sizedByteArray();

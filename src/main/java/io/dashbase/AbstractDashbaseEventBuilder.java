@@ -16,6 +16,7 @@ public abstract class AbstractDashbaseEventBuilder<T, B extends AbstractDashbase
   protected Map<String, String> idCols = new HashMap<>();
   protected long timeInMillis = -1L;
   protected boolean omitPayload = false;
+  protected String raw = null;
 
   public abstract T build();
 
@@ -97,6 +98,11 @@ public abstract class AbstractDashbaseEventBuilder<T, B extends AbstractDashbase
       return (B) this;
     }
     this.numberCols.put(name, val);
+    return (B) this;
+  }
+
+  public B setRaw(String raw) {
+    this.raw = raw;
     return (B) this;
   }
 
