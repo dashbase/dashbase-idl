@@ -16,6 +16,7 @@ public class DashbaseEventBuilder extends AbstractDashbaseEventBuilder<DashbaseE
         event.setMetaColumns(metaCols);
         event.setTextColumns(textCols);
         event.setNumberColumns(numberCols);
+        event.setRaw(raw);
         return event;
     }
 }
