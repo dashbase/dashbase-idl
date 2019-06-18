@@ -1,0 +1,65 @@
+import com.amazonaws.auth.*
+import com.amazonaws.auth.profile.*
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        // Install AWS SDK so that we can use local AWS credentials for S3 access
+        classpath 'com.amazonaws:aws-java-sdk-core:1.11.202'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'maven'
+    id 'maven-publish'
+    id 'eclipse'
+    id 'idea'
+}
+
+// gradle avro plugin https://github.com/commercehub-oss/gradle-avro-plugin currently uses avro 1.8.1
+// until the plugin supports avro 1.8.2, we have to use maven to re-generate avro-java code.
+
+group = 'io.dashbase'
+version = '1.0.0-SNAPSHOT'
+
+description = "Dashbase IDLs"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile group: 'org.apache.avro', name: 'avro', version:'1.8.2'
+    compile group: 'com.google.guava', name: 'guava', version:'23.1-jre'
+    testCompile group: 'junit', name: 'junit', version:'4.5'
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
+}
+
+def awsCredentials = DefaultAWSCredentialsProviderChain.getInstance().getCredentials()
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url "s3://repo.dashbase.io/snapshot"
+            credentials(AwsCredentials) {
+                accessKey awsCredentials.AWSAccessKeyId
+                secretKey awsCredentials.AWSSecretKey
+            }
+        }
+    }
+}
